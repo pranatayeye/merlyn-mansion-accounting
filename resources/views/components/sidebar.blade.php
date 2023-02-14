@@ -12,8 +12,8 @@
     <hr class="sidebar-divider my-0 text-light">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item {{ strpos(Request::path(), '/') !== false ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -26,14 +26,14 @@
         Accounting
     </div>
 
-    <li class="nav-item">
+    <li class="nav-item {{ strpos(Request::path(), 'transaction') !== false ? 'active' : '' }}" >
         <a class="nav-link" href="{{ route('transaction.index') }}">
             <i class="fas fa-fw fa-book"></i>
             <span>Transaction</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <li class="nav-item {{ strpos(Request::path(), 'financial-report') !== false ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('financialReport.index') }}">
             <i class="fas fa-fw fa-chart-line"></i>
             <span>Financial Report</span></a>
     </li>

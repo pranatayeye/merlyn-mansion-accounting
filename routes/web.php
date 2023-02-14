@@ -34,3 +34,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get("transaction/{transaction:id}/delete", [TransactionController::class, 'destroy'])->name('transaction.destroy');
     Route::get("transaction/search/{first}/{last}", [TransactionController::class, 'search'])->name('transaction.search');
 //  });
+
+Route::get("financial-report", [FinancialReportController::class, 'index'])->name('financialReport.index');
+Route::get("financial-report/{month}/{year}", [FinancialReportController::class, 'detail'])->name('financialReport.detail');

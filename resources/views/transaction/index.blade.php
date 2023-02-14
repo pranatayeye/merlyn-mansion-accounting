@@ -72,8 +72,8 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
+                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead class="bg-success text-light">
                                     <tr>
                                         <th>No.</th>
                                         <th>Tanggal Transaksi</th>
@@ -90,7 +90,7 @@
                                             <td>{{ Carbon\Carbon::parse($transaction->transaction_date)->format('d F Y') }}</td>
                                             <td>{{ $transaction->description }}</td>
                                             <td>{{ $transaction->status }}</td>
-                                            <td>{{ number_format($transaction->quantity, 0, '', '.'); }}</td>
+                                            <td>{{ number_format($transaction->quantity, 0, '', '.') }}</td>
                                             <td>
                                                 <a class="text-danger" href="#" data-toggle="modal" data-target="#deleteModal{{ $transaction->id }}">
                                                     <i class="fas fa-trash"></i>

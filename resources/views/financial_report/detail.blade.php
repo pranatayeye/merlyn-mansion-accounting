@@ -44,12 +44,26 @@
                                 </thead>
                                 <tbody>
                                     @if (isset($dates))
+                                        @if ($total_quantity != $saldo)
+                                            <tr>
+                                                <td>1</td>
+                                                <td>01 {{ ucfirst($month) }} {{ $year }}</td>
+                                                <td>Saldo Awal</td>
+                                                <td class="text-end">{{ number_format($previous_saldo, 0, '', '.') }}</td>
+                                                <td class="text-end"></td>
+                                            </tr>
+                                        @endif
+
                                         @foreach ($dates as $date)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                @if ($total_quantity != $saldo)
+                                                    <td>{{ $loop->iteration + 1 }}</td>
+                                                @else
+                                                    <td>{{ $loop->iteration }}</td>
+                                                @endif
                                                 <td>{{ Carbon\Carbon::parse($date->transaction_date)->format('d F Y') }}</td>
                                                 <td>{{ $date->description }}</td>
-                                                
+
                                                 @if ($date->status == 'Masuk')
                                                     <td class="text-end">{{ number_format($date->quantity, 0, '', '.') }}</td>
                                                     <td class="text-end"></td>
@@ -76,7 +90,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="fw-bold text-end">Saldo Akhir</td>
-                                            <td colspan="2" class="fw-bold text-end">{{ number_format($total_quantity, 0, '', '.') }}</td>
+                                            <td colspan="2" class="fw-bold text-end">{{ number_format($saldo, 0, '', '.') }}</td>
                                         </tr>
                                     </tfoot>
                                 @endif

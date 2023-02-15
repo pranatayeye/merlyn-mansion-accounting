@@ -15,9 +15,9 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="p-5">
+                            <div class="px-5 pb-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    <img src="{{ asset('assets/img/logo.png') }}" alt="logo merlyn mansion" class="img-fluid">
                                 </div>
                                 <form method="POST" action="{{ route('login') }}" class="user">
                                     @csrf
@@ -51,7 +51,7 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-user btn-block">
+                                    <button type="submit" class="btn btn-success btn-user btn-block fw-bold fs-6">
                                         Login
                                     </button>
                                 </form>

@@ -3,50 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Transaction;
-use App\Models\ActivityLog;
 
 class FinancialReportController extends Controller
 {
     public function data()
     {
-        // $datas = Transaction::all();
-
-        // $groupedDates = [];
-
-        // foreach ($datas as $date) {
-        //     $formattedDate = date_create_from_format("Y-m-d", $date->transaction_date);
-        //     $year = date_format($formattedDate, "Y");
-        //     $month = date_format($formattedDate, "F");
-
-        //     if (!array_key_exists($year, $groupedDates)) {
-        //         $groupedDates[$year] = [];
-        //     }
-
-        //     if (!array_key_exists($month, $groupedDates[$year])) {
-        //         $groupedDates[$year][$month] = [];
-        //     }
-
-        //     $groupedDates[$year][$month][] = $date;
-            
-        //     $result = [];
-        //     foreach ($groupedDates as $year => $months) {
-        //         $monthsData = [];
-        //         foreach ($months as $month => $dates) {
-        //             $monthsData[] = [
-        //                 "month" => strtolower($month),
-        //                 "dates" => $dates,
-        //             ];
-        //         }
-
-        //         $result[] = [
-        //             "year" => $year,
-        //             "months" => $monthsData,
-        //         ];
-        //     }
-        // }
-
         $datas = Transaction::all();
 
         $groupedDates = [];
@@ -65,6 +27,7 @@ class FinancialReportController extends Controller
                     "total_quantity" => 0,
                     "revenue" => 0,
                     "expense" => 0,
+                    "previous_saldo" => 0,
                 ];
             }
             $groupedDates[$year][$month][] = $date;
@@ -88,18 +51,30 @@ class FinancialReportController extends Controller
         }
 
         $result = [];
-        $saldo =0;
+        $saldo = 0;
         foreach ($groupedDates as $year => $months) {
             $monthsData = [];
             foreach ($months as $month => $monthData) {
                 $total_quantity = $monthData["total_quantity"];
                 $revenue = $monthData["revenue"];
                 $expense = $monthData["expense"];
-                $saldo += $monthData["total_quantity"];
+                
+                // for next saldo
+                if ($saldo == $total_quantity) {
+                    $saldo = 0;
+                } else {
+                    $revenue += $saldo;
+                }
+                $saldo += $total_quantity;
+                
+                // get previous saldo
+                $previous_saldo = $monthData["previous_saldo"] = $saldo - $total_quantity;
 
+                // remove useless keys
                 unset($monthData["total_quantity"]);
                 unset($monthData["revenue"]);
                 unset($monthData["expense"]);
+                unset($monthData["previous_saldo"]);
 
                 $monthsData[] = [
                     "month" => strtolower($month),
@@ -107,6 +82,7 @@ class FinancialReportController extends Controller
                     "revenue" => $revenue,
                     "expense" => $expense,
                     "saldo" => $saldo,
+                    "previous_saldo" => $previous_saldo,
                     "dates" => $monthData,
                 ];
             }
@@ -163,11 +139,15 @@ class FinancialReportController extends Controller
             $total_quantity = $monthData['total_quantity'];
             $revenue = $monthData['revenue'];
             $expense = $monthData['expense'];
+            $saldo = $monthData['saldo'];
+            $previous_saldo = $monthData['previous_saldo'];
         } else {
             $dates = null;
             $total_quantity = null;
             $revenue = null;
             $expense = null;
+            $saldo = null;
+            $previous_saldo = null;
         }
 
         // dd($result);
@@ -178,6 +158,8 @@ class FinancialReportController extends Controller
             'total_quantity' => $total_quantity,
             'revenue' => $revenue,
             'expense' => $expense,
+            'saldo' => $saldo,
+            'previous_saldo' => $previous_saldo,
         ]);
     }
 }

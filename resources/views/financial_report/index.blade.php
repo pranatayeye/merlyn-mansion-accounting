@@ -54,11 +54,6 @@
                                                                     Lihat laporan
                                                                 </a>
                                                             </li>
-                                                            <li><a href="" class="dropdown-item">
-                                                                <i class="fas fa-file-download text-success me-1"></i>
-                                                                    Download berkas
-                                                                </a>
-                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </td>

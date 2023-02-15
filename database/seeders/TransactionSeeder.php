@@ -17,24 +17,6 @@ class TransactionSeeder extends Seeder
     {
         $data = [
             [
-                'transaction_date' => '2022-01-01 00:00:00',
-                'description' => 'Saldo Awal',
-                'status' => 'Masuk',
-                'quantity' => 9000000,
-            ],
-            [
-                'transaction_date' => '2022-02-01 00:00:00',
-                'description' => 'Saldo Awal',
-                'status' => 'Masuk',
-                'quantity' => 9000000,
-            ],
-            [
-                'transaction_date' => '2022-02-11 00:00:00',
-                'description' => 'Tambah Dana',
-                'status' => 'Masuk',
-                'quantity' => 1000000,
-            ],
-            [
                 'transaction_date' => '2023-01-01 00:00:00',
                 'description' => 'Saldo Awal',
                 'status' => 'Masuk',
@@ -78,6 +60,24 @@ class TransactionSeeder extends Seeder
             ],
             [
                 'transaction_date' => '2023-01-28 00:00:00',
+                'description' => 'Bayar Listrik dan Air',
+                'status' => 'Keluar',
+                'quantity' => 1250000,
+            ],
+            [
+                'transaction_date' => '2023-02-06 00:00:00',
+                'description' => 'Beli Gas Elpiji',
+                'status' => 'Keluar',
+                'quantity' => 250000,
+            ],
+            [
+                'transaction_date' => '2023-02-10 00:00:00',
+                'description' => 'Uang Sewa Bu Jero',
+                'status' => 'Masuk',
+                'quantity' => 2000000,
+            ],
+            [
+                'transaction_date' => '2023-03-11 00:00:00',
                 'description' => 'Bayar Listrik dan Air',
                 'status' => 'Keluar',
                 'quantity' => 1250000,

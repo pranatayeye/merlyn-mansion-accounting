@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Merlyn Villa Accounting | @yield('pageTitle')</title>
+    <title>Merlyn Mansion Accounting | @yield('pageTitle')</title>
     <link href="{{ asset('assets/bootstrap-5.0.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template from StartBootstrap -->

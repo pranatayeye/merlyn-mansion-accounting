@@ -1,11 +1,11 @@
 <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion fw-bold" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-bed"></i>
+            <img src="{{ asset('assets/img/logo.png') }}" alt="logo merlyn mansion" class="img-fluid">
         </div>
-        <div class="sidebar-brand-text mx-2">Merlyn Villa</div>
+        <div class="sidebar-brand-text mx-2">Merlyn Mansion</div>
     </a>
 
     <!-- Divider -->

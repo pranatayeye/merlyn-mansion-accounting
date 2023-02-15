@@ -7,5 +7,11 @@
 .pagination .page-item:not(.disabled) .page-link {
     color: #1cc88a;
 }
+
+.dropdown-item:focus {
+    background-color: rgb(234, 236, 244);
+    color: #5a5c69;
+}
+
   
   

@@ -101,9 +101,9 @@
                                                 aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Apa kamu yakin??</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <div class="modal-header bg-success text-light">
+                                                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Apa Anda yakin??</h5>
+                                                            <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
@@ -156,7 +156,7 @@
                                         class="form-control @error('transaction_date') is-invalid @enderror" 
                                         id="transaction" placeholder="date" name="transaction_date"
                                         value="{{ date("Y-m-d") }}" required>
-                                    <label for="floatingInput">Tanggal Transaksi</label>
+                                    <label for="floatingInput">Tanggal Transaksi<span class="text-danger">*</span></label>
                                     @error('transaction_date')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -172,7 +172,7 @@
                                         class="form-control text-start @error('description') is-invalid @enderror" 
                                         id="description" placeholder="keterangan"
                                         value="{{ old('description') }}" required></textarea>
-                                    <label for="floatingInput">Keterangan</label>
+                                    <label for="floatingInput">Keterangan<span class="text-danger">*</span></label>
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -191,7 +191,7 @@
                                             <option value="Masuk">Masuk</option>
                                             <option value="Keluar">Keluar</option>
                                         </select>
-                                        <label for="floatingInput">Masuk/Keluar</label>
+                                        <label for="floatingInput">Masuk/Keluar<span class="text-danger">*</span></label>
                                         @error('status')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -205,7 +205,7 @@
                                             class="form-control @error('quantity') is-invalid @enderror" 
                                             id="quantity" placeholder="quantity" name="quantity"
                                             value="{{ old('quantity') }}" required>
-                                        <label for="floatingInput">Jumlah</label>
+                                        <label for="floatingInput">Jumlah<span class="text-danger">*</span></label>
                                         @error('quantity')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

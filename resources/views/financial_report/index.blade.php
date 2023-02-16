@@ -38,10 +38,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $no = 1; ?>
                                     @foreach ($result as $yearData)
                                         @foreach ($yearData['months'] as $monthData)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $no++ }}</td>
                                                 <td>{{ ucfirst($monthData['month']) }} {{ $yearData['year'] }}</td>
                                                 <td class="align-middle">
                                                     <div class="dropdown">

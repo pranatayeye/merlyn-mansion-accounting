@@ -38,26 +38,28 @@
             <span>Financial Report</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider text-light">
+    @if (Auth()->user()->position == 'Owner')
+        <!-- Divider -->
+        <hr class="sidebar-divider text-light">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        User Management
-    </div>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            User Management
+        </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-wa fa-users-cog"></i>
-            <span>Users</span></a>
-    </li>
+        <li class="nav-item {{ strpos(Request::path(), 'users') !== false ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('user.index') }}">
+                <i class="fas fa-wa fa-users-cog"></i>
+                <span>Users</span></a>
+        </li>
 
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-list"></i>
-            <span>Activity Log</span></a>
-    </li>
+        <!-- Nav Item - Tables -->
+        <li class="nav-item {{ strpos(Request::path(), 'activity-log') !== false ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('log.index') }}">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Activity Log</span></a>
+        </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block text-light">

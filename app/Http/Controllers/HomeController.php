@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ReportService;
+use App\Models\User;
+use App\Models\Transaction;
 
 class HomeController extends Controller
 {
@@ -22,7 +25,31 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    {              
+        $data = ReportService::data();
+
+        // total revenue & expense
+        $totalRevenue = 0;
+        $totalExpense = 0;
+        foreach ($data as $year) {
+            foreach ($year['months'] as $month) {
+                $totalExpense += $month['expense'];
+                $totalRevenue += $month['total_quantity'] + $month['expense'];
+            }
+        }
+
+        // last saldo
+        $lastYearIndex = count($data) - 1;
+        $lastMonthIndex = count($data[$lastYearIndex]['months']) - 1;
+        $lastSaldo = $data[$lastYearIndex]['months'][$lastMonthIndex]['saldo'];
+
+        // dd(count(User::all()));
+        return view('home', [
+            'totalRevenue' => $totalRevenue,
+            'totalExpense' => $totalExpense,
+            'lastSaldo' => $lastSaldo,
+            'totalUser' => count(User::all()),
+            'totalTransaction' => count(Transaction::all()),
+        ]);
     }
 }

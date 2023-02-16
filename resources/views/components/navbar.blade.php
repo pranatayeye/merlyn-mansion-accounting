@@ -19,9 +19,9 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-success"></i>
-                    Profile
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#passwordModal">
+                    <i class="fas fa-key fa-sm fa-fw mr-2 text-success"></i>
+                    Ubah Password
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -40,9 +40,9 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Siap Keluar?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-success text-light">
+                <h5 class="modal-title fw-bold" id="exampleModalLabel">Siap Keluar?</h5>
+                <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -62,3 +62,45 @@
         </div>
     </div>
 </div>
+<!-- End Logout Modal-->
+
+<!-- Change Password Modal-->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('user.update') }}" class="user">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header bg-success text-light">
+                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Ubah Password</h5>
+                    <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body container mt-2">
+                    <div>
+                        <div class="form-floating mb-3">
+                            <input type="password" 
+                                class="form-control @error('password') is-invalid @enderror" 
+                                id="password" placeholder="password" name="password"
+                                value="" minlength="8" required>
+                            <label for="floatingInput">Password <span class="text-danger">*</span></label>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success fw-bold">
+                        Simpan Data
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Change Password Modal-->

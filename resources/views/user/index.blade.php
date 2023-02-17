@@ -91,33 +91,42 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->position }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>
-                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#deleteModal{{ $user->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                            <!-- Modal Delete Validation -->
-                                            <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-success text-light">
-                                                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Apa Anda yakin??</h5>
-                                                            <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">Pilih "Hapus" di bawah jika Anda siap menghapus.</div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                            <a class="btn btn-danger" href="{{ route('user.destroy', $user->id) }}">
-                                                                Hapus
-                                                            </a>
+
+                                            @if (Auth()->user()->position == $user->position)
+                                                <td>
+                                                    <a class="text-muted" href="#">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#deleteModal{{ $user->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                                <!-- Modal Delete Validation -->
+                                                <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-success text-light">
+                                                                <h5 class="modal-title fw-bold" id="exampleModalLabel">Apa Anda yakin??</h5>
+                                                                <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">Pilih "Hapus" di bawah jika Anda siap menghapus.</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                                <a class="btn btn-danger" href="{{ route('user.destroy', $user->id) }}">
+                                                                    Hapus
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- End of Modal Delete Validation -->
+                                                <!-- End of Modal Delete Validation -->
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

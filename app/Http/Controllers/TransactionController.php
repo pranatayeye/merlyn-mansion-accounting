@@ -42,7 +42,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::create([
             'transaction_date' => $request->transaction_date,
-            'description' => $request->description,
+            'description' => ucfirst($request->description),
             'status' => $request->status,
             'quantity' => $request->quantity,
             'user_id' => auth()->user()->id,

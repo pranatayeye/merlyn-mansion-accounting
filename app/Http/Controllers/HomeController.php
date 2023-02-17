@@ -27,23 +27,30 @@ class HomeController extends Controller
     public function index()
     {              
         $data = ReportService::data();
-
-        // total revenue & expense
-        $totalRevenue = 0;
-        $totalExpense = 0;
-        foreach ($data as $year) {
-            foreach ($year['months'] as $month) {
-                $totalExpense += $month['expense'];
-                $totalRevenue += $month['total_quantity'] + $month['expense'];
+        // dd($data == null);
+        
+        if ($data != null) {
+            // total revenue & expense
+            $totalRevenue = 0;
+            $totalExpense = 0;
+            foreach ($data as $year) {
+                foreach ($year['months'] as $month) {
+                    $totalExpense += $month['expense'];
+                    $totalRevenue += $month['total_quantity'] + $month['expense'];
+                }
             }
+
+            // last saldo
+            $lastYearIndex = count($data) - 1;
+            $lastMonthIndex = count($data[$lastYearIndex]['months']) - 1;
+            $lastSaldo = $data[$lastYearIndex]['months'][$lastMonthIndex]['saldo'];
+        
+        } else {
+            $totalRevenue = null;
+            $totalExpense = null;
+            $lastSaldo = null;
         }
-
-        // last saldo
-        $lastYearIndex = count($data) - 1;
-        $lastMonthIndex = count($data[$lastYearIndex]['months']) - 1;
-        $lastSaldo = $data[$lastYearIndex]['months'][$lastMonthIndex]['saldo'];
-
-        // dd(count(User::all()));
+        // dd($data);
         return view('home', [
             'totalRevenue' => $totalRevenue,
             'totalExpense' => $totalExpense,

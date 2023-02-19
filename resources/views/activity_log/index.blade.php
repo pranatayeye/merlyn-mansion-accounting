@@ -42,7 +42,7 @@
                                     @foreach ($logs as $log)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ Carbon\Carbon::parse($log->created_at)->format('d F Y') }}</td>
+                                            <td>{{ Carbon\Carbon::parse($log->created_at)->format('d-M-y') }}</td>
                                             <td>{{ $log->name }}</td>
                                             <td>{{ $log->description }}</td>
                                         </tr>

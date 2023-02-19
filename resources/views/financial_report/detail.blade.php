@@ -28,7 +28,7 @@
                         <h6 class="m-0 font-weight-bold text-center text-light">Laporan Pemasukan & Pengeluaran</h6>
                     </div>
                     <div class="card-header py-3 bg-success">
-                        <h6 class="m-0 font-weight-bold text-center text-light">Periode {{ ucfirst($month) }} {{ $year }}</h6>
+                        <h6 class="m-0 font-weight-bold text-center text-light">Periode {{ Carbon\Carbon::parse($month)->format('M') }} {{ Carbon\Carbon::parse($year)->format('y') }}</h6>
                     </div>
                     <div class="card-body px-md-5">
                         <div class="table-responsive">
@@ -47,7 +47,7 @@
                                         @if ($total_quantity != $saldo)
                                             <tr>
                                                 <td>1</td>
-                                                <td>01 {{ ucfirst($month) }} {{ $year }}</td>
+                                                <td>01-{{ Carbon\Carbon::parse($month)->format('M') }}-{{ Carbon\Carbon::parse($year)->format('y') }}</td>
                                                 <td>Saldo Awal</td>
                                                 <td class="text-end">{{ number_format($previous_saldo, 0, '', '.') }}</td>
                                                 <td class="text-end"></td>
@@ -61,7 +61,7 @@
                                                 @else
                                                     <td>{{ $loop->iteration }}</td>
                                                 @endif
-                                                <td>{{ Carbon\Carbon::parse($date->transaction_date)->format('d F Y') }}</td>
+                                                <td>{{ Carbon\Carbon::parse($date->transaction_date)->format('d-M-y') }}</td>
                                                 <td>{{ $date->description }}</td>
 
                                                 @if ($date->status == 'Masuk')

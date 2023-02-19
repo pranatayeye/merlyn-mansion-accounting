@@ -36,6 +36,7 @@ Route::get("transaction/{transaction:id}/delete", [TransactionController::class,
 Route::get("transaction/search/{first}/{last}", [TransactionController::class, 'search'])->name('transaction.search');
 Route::get("financial-report", [FinancialReportController::class, 'index'])->name('financialReport.index');
 Route::get("financial-report/{month}/{year}", [FinancialReportController::class, 'detail'])->name('financialReport.detail');
+Route::get("pdf/{month}/{year}", [FinancialReportController::class, 'generatePdf'])->name('financialReport.generatePdf');
 
 Route::middleware('position:Owner')->group(function () {
     Route::get("users", [UserController::class, 'index'])->name('user.index');

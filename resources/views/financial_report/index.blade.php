@@ -55,6 +55,11 @@
                                                                     Lihat laporan
                                                                 </a>
                                                             </li>
+                                                            <li><a href="{{ route('financialReport.generatePdf', ['month' => $monthData['month'], 'year' => $yearData['year']]) }}" class="dropdown-item">
+                                                                <i class="fas fa-download text-success me-1"></i>
+                                                                    Unduh Laporan
+                                                                </a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </td>

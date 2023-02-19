@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use Dompdf\Dompdf;
 use App\Services\ReportService;
 
 class FinancialReportController extends Controller
@@ -17,8 +17,8 @@ class FinancialReportController extends Controller
         ]);
     }
 
-    public function detail($month, $year)
-    {              
+    public function getReport($month, $year)
+    {
         $result = ReportService::data();
 
         $monthToFind = strtolower($month);
@@ -61,7 +61,20 @@ class FinancialReportController extends Controller
             $previous_saldo = null;
         }
 
-        // dd($result);
+        return array($dates, $total_quantity, $revenue, $expense, $saldo, $previous_saldo);
+    }
+
+    public function detail($month, $year)
+    {              
+        $report = $this->getReport($month, $year);
+
+        $dates = $report[0];
+        $total_quantity = $report[1];
+        $revenue = $report[2];
+        $expense = $report[3];
+        $saldo = $report[4];
+        $previous_saldo = $report[5];
+        
         return view('financial_report.detail', [
             'dates' => $dates,
             'month' => $month,
@@ -72,5 +85,43 @@ class FinancialReportController extends Controller
             'saldo' => $saldo,
             'previous_saldo' => $previous_saldo,
         ]);
+    }
+
+    public function generatePdf($month, $year)
+    {
+        $report = $this->getReport($month, $year);
+
+        $dates = $report[0];
+        $total_quantity = $report[1];
+        $revenue = $report[2];
+        $expense = $report[3];
+        $saldo = $report[4];
+        $previous_saldo = $report[5];
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('financial_report.pdf', [
+            'dates' => $dates,
+            'month' => $month,
+            'year' => $year,
+            'total_quantity' => $total_quantity,
+            'revenue' => $revenue,
+            'expense' => $expense,
+            'saldo' => $saldo,
+            'previous_saldo' => $previous_saldo,
+        ]));
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream();
+        // return view('financial_report.pdf', [
+        //     'dates' => $dates,
+        //     'month' => $month,
+        //     'year' => $year,
+        //     'total_quantity' => $total_quantity,
+        //     'revenue' => $revenue,
+        //     'expense' => $expense,
+        //     'saldo' => $saldo,
+        //     'previous_saldo' => $previous_saldo,
+        // ]);
     }
 }

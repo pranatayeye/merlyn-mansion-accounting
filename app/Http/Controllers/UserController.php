@@ -51,7 +51,6 @@ class UserController extends Controller
             $email = $emailTemp;
         }
         
-        // dd($email);
         // generete password
         $password = '#' . Str::random(8);
         

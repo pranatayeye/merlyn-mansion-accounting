@@ -87,7 +87,7 @@
                                     @foreach ($transactions as $transaction)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ Carbon\Carbon::parse($transaction->transaction_date)->format('d F Y') }}</td>
+                                            <td>{{ Carbon\Carbon::parse($transaction->transaction_date)->format('d-M-y') }}</td>
                                             <td>{{ $transaction->description }}</td>
                                             <td>{{ $transaction->status }}</td>
                                             <td>{{ number_format($transaction->quantity, 0, '', '.') }}</td>

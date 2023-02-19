@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use App\Services\ReportService;
+use Carbon\Carbon;
 
 class FinancialReportController extends Controller
 {
@@ -112,16 +113,7 @@ class FinancialReportController extends Controller
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        return $dompdf->stream();
-        // return view('financial_report.pdf', [
-        //     'dates' => $dates,
-        //     'month' => $month,
-        //     'year' => $year,
-        //     'total_quantity' => $total_quantity,
-        //     'revenue' => $revenue,
-        //     'expense' => $expense,
-        //     'saldo' => $saldo,
-        //     'previous_saldo' => $previous_saldo,
-        // ]);
+        $fileName = 'Laporan-Periode-'. Carbon::parse($month)->format('M') .'-'. Carbon::parse($year)->format('y') .'.pdf';
+        return $dompdf->stream($fileName);
     }
 }

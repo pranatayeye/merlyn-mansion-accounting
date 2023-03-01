@@ -23,6 +23,10 @@
                     <i class="fas fa-key fa-sm fa-fw mr-2 text-success"></i>
                     Ubah Password
                 </a>
+                <a class="dropdown-item" href="{{ route('help') }}">
+                    <i class="fas fa-question-circle fa-sm fa-fw mr-2 text-success"></i>
+                    Bantuan
+                </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>

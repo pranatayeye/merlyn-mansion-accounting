@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Merlyn Mansion Accounting | @yield('pageTitle')</title>
+    <title>@yield('pageTitle') | Merlyn Mansion Accounting</title>
 
     <!-- Favicon -->
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('assets/favicon/apple-touch-icon-57x57.png') }}" />

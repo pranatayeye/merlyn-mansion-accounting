@@ -49,7 +49,7 @@
                                                 <td>1</td>
                                                 <td>01-{{ Carbon\Carbon::parse($month)->format('M') }}-{{ Carbon\Carbon::parse($year)->format('y') }}</td>
                                                 <td>Saldo Awal</td>
-                                                <td class="text-end">{{ number_format($previous_saldo, 0, '', '.') }}</td>
+                                                <td class="text-end">{{ number_format($previous_saldo, 2, '.', ',') }}</td>
                                                 <td class="text-end"></td>
                                             </tr>
                                         @endif
@@ -65,11 +65,11 @@
                                                 <td>{{ $date->description }}</td>
 
                                                 @if ($date->status == 'Masuk')
-                                                    <td class="text-end">{{ number_format($date->quantity, 0, '', '.') }}</td>
+                                                    <td class="text-end">{{ number_format($date->quantity, 2, '.', ',') }}</td>
                                                     <td class="text-end"></td>
                                                 @elseif ($date->status == 'Keluar')
                                                     <td class="text-end"></td>
-                                                    <td class="text-end">{{ number_format($date->quantity, 0, '', '.') }}</td>
+                                                    <td class="text-end">{{ number_format($date->quantity, 2, '.', ',') }}</td>
                                                 @endif
                                                 
                                             </tr>
@@ -85,12 +85,12 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="3" class="fw-bold text-end">Total</td>
-                                            <td class="fw-bold text-end">{{ number_format($revenue, 0, '', '.') }}</td>
-                                            <td class="fw-bold text-end">{{ number_format($expense, 0, '', '.') }}</td>
+                                            <td class="fw-bold text-end">{{ number_format($revenue, 2, '.', ',') }}</td>
+                                            <td class="fw-bold text-end">{{ number_format($expense, 2, '.', ',') }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="fw-bold text-end">Saldo Akhir</td>
-                                            <td colspan="2" class="fw-bold text-end">{{ number_format($saldo, 0, '', '.') }}</td>
+                                            <td colspan="2" class="fw-bold text-end">{{ number_format($saldo, 2, '.', ',') }}</td>
                                         </tr>
                                     </tfoot>
                                 @endif

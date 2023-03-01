@@ -61,14 +61,16 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-7 col-12 mt-md-0 mt-4 pt-md-3 pt-0 text-end">
-                            <a class="btn btn-success btn-icon-split" href="#" data-toggle="modal" data-target="#transactionModal">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                <span class="text">Catat Transaksi</span>
-                            </a>
-                        </div>
+                        @if (auth()->user()->can('createTransaction'))
+                            <div class="col-md-7 col-12 mt-md-0 mt-4 pt-md-3 pt-0 text-end">
+                                <a class="btn btn-success btn-icon-split" href="#" data-toggle="modal" data-target="#transactionModal">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Catat Transaksi</span>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -80,7 +82,9 @@
                                         <th>Keterangan</th>
                                         <th>Masuk/Keluar</th>
                                         <th>Nilai (Rp)</th>
-                                        <th>Hapus</th>
+                                        @if (auth()->user()->can('deleteTransaction'))
+                                            <th>Hapus</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,34 +94,36 @@
                                             <td>{{ Carbon\Carbon::parse($transaction->transaction_date)->format('d-M-y') }}</td>
                                             <td>{{ $transaction->description }}</td>
                                             <td>{{ $transaction->status }}</td>
-                                            <td>{{ number_format($transaction->quantity, 0, '', '.') }}</td>
-                                            <td>
-                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#deleteModal{{ $transaction->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                            <!-- Modal Delete Validation -->
-                                            <div class="modal fade" id="deleteModal{{ $transaction->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-success text-light">
-                                                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Apa Anda yakin??</h5>
-                                                            <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">Pilih "Hapus" di bawah jika Anda siap menghapus.</div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                            <a class="btn btn-danger" href="{{ route('transaction.destroy', $transaction->id) }}">
-                                                                Hapus
-                                                            </a>
+                                            <td>{{ number_format($transaction->quantity, 2, '.', ',') }}</td>
+                                            @if (auth()->user()->can('deleteTransaction'))
+                                                <td>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#deleteModal{{ $transaction->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                                <!-- Modal Delete Validation -->
+                                                <div class="modal fade" id="deleteModal{{ $transaction->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-success text-light">
+                                                                <h5 class="modal-title fw-bold" id="exampleModalLabel">Apa Anda yakin??</h5>
+                                                                <button class="close text-light" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">Pilih "Hapus" di bawah jika Anda siap menghapus.</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                                <a class="btn btn-danger" href="{{ route('transaction.destroy', $transaction->id) }}">
+                                                                    Hapus
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- End of Modal Delete Validation -->
+                                                <!-- End of Modal Delete Validation -->
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -204,7 +210,7 @@
                                         <input type="number" 
                                             class="form-control @error('quantity') is-invalid @enderror" 
                                             id="quantity" placeholder="quantity" name="quantity"
-                                            value="{{ old('quantity') }}" required>
+                                            value="{{ old('quantity') }}" step="0.01" required>
                                         <label for="floatingInput">Jumlah<span class="text-danger">*</span></label>
                                         @error('quantity')
                                             <span class="invalid-feedback" role="alert">

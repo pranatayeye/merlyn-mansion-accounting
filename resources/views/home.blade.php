@@ -32,6 +32,9 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    <a href="{{ route('help') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Bantuan" style="text-decoration: none;">
+                        <i class="fas fa-question-circle fa-lg fa-fw text-success"></i>
+                    </a>
                 </div>
 
                 <!-- Content Row -->
@@ -63,7 +66,7 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                             Total Pemasukan</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            Rp. {{ number_format($totalRevenue, 0, '', '.') }}
+                                            Rp. {{ number_format($totalRevenue, 2, '.', ',') }}
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -82,7 +85,7 @@
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                             Total Pengeluaran</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            Rp. {{ number_format($totalExpense, 0, '', '.') }}
+                                            Rp. {{ number_format($totalExpense, 2, '.', ',') }}
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -101,7 +104,7 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Saldo Akhir</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            Rp. {{ number_format($lastSaldo, 0, '', '.') }}
+                                            Rp. {{ number_format($lastSaldo, 2, '.', ',') }}
                                         </div>
                                     </div>
                                     <div class="col-auto">

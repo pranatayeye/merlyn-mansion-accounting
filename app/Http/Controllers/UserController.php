@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\ActivityLog;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -14,7 +16,30 @@ class UserController extends Controller
     {              
         return view('user.index', [
             'users' => User::latest()->get(),
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
         ]);
+    }
+
+    public function role(Request $request)
+    {
+        $request->validate([
+            'role' => ['required', 'max:50', 'unique:roles,name'],
+            'permissions' => ['required'],
+        ]);
+
+        $role = Role::create([
+            'name' => $request->role,
+        ]);
+        
+        $role->givePermissionTo($request->permissions);
+
+        ActivityLog::create([
+            'name' => auth()->user()->name,
+            'description' => 'Membuat role ' .'('. $request->role . ')',
+        ]);
+
+    	return redirect()->route('user.index')->with('success', 'Data role berhasil dibuat');
     }
 
     public function store(Request $request)
@@ -22,6 +47,7 @@ class UserController extends Controller
         $request->validate([  
             'name' => 'required',
             'position' => 'required',
+            'roles' => 'required',
         ]);
 
         // generete email
@@ -61,6 +87,8 @@ class UserController extends Controller
             'password' => Hash::make($password),
         ]);
 
+        $user->assignRole($request->roles);
+
         ActivityLog::create([
             'name' => auth()->user()->name,
             'description' => 'Membuat user ' . '(' . $user->name . ')',
@@ -71,6 +99,24 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password,
         ]);
+    }
+
+    public function editRole(Request $request, User $user)
+    {
+        $request->validate([  
+            'roles' => 'required',
+        ]);
+
+        $user = User::find($user->id);
+
+        $user->syncRoles($request->roles);
+
+        ActivityLog::create([
+            'name' => auth()->user()->name,
+            'description' => 'Mengubah user role ' .'('. $user->name . ')',
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'User role berhasil diubah');
     }
 
     public function destroy(User $user)

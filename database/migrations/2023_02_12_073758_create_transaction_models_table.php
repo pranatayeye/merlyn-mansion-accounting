@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->text('description');
             $table->string('status');
-            $table->integer('quantity');
+            $table->decimal('quantity');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
         });

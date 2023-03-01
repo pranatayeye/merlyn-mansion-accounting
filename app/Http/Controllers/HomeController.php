@@ -59,4 +59,9 @@ class HomeController extends Controller
             'totalTransaction' => count(Transaction::all()),
         ]);
     }
+
+    public function help()
+    {
+        return view('help.index');
+    }
 }

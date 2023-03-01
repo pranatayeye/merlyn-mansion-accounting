@@ -11,34 +11,52 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0 text-light">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ strpos(Request::path(), '/') !== false ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('home') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
+    @if (auth()->user()->can('dashboard'))
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item {{ strpos(Request::path(), '/') !== false ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('home') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+    @endif
 
-    <!-- Divider -->
-    <hr class="sidebar-divider text-light">
+    @if (
+        auth()->user()->can('readTransaction') || 
+        auth()->user()->can('readReport')
+        )
+        <!-- Divider -->
+        <hr class="sidebar-divider text-light">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Accounting
-    </div>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Accounting
+        </div>
+    @endif
 
-    <li class="nav-item {{ strpos(Request::path(), 'transaction') !== false ? 'active' : '' }}" >
-        <a class="nav-link" href="{{ route('transaction.index') }}">
-            <i class="fas fa-fw fa-book"></i>
-            <span>Transaction</span></a>
-    </li>
+    @if (
+        auth()->user()->can('readTransaction') || 
+        auth()->user()->can('createTransaction') ||
+        auth()->user()->can('deleteTransaction')
+        )
+        <li class="nav-item {{ strpos(Request::path(), 'transaction') !== false ? 'active' : '' }}" >
+            <a class="nav-link" href="{{ route('transaction.index') }}">
+                <i class="fas fa-fw fa-book"></i>
+                <span>Transaction</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item {{ strpos(Request::path(), 'financial-report') !== false ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('financialReport.index') }}">
-            <i class="fas fa-fw fa-chart-line"></i>
-            <span>Financial Report</span></a>
-    </li>
+    @if (auth()->user()->can('readReport'))
+        <li class="nav-item {{ strpos(Request::path(), 'financial-report') !== false ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('financialReport.index') }}">
+                <i class="fas fa-fw fa-chart-line"></i>
+                <span>Financial Report</span></a>
+        </li>
+    @endif
 
-    @if (Auth()->user()->position == 'Owner')
+    @if (
+        auth()->user()->can('readUser') || 
+        auth()->user()->can('createLog')
+        )
         <!-- Divider -->
         <hr class="sidebar-divider text-light">
 
@@ -46,13 +64,22 @@
         <div class="sidebar-heading">
             User Management
         </div>
+    @endif
 
+    @if (
+        auth()->user()->can('readUser') || 
+        auth()->user()->can('createUser') ||
+        auth()->user()->can('editRoleUser') ||
+        auth()->user()->can('deleteUser')
+        )
         <li class="nav-item {{ strpos(Request::path(), 'users') !== false ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-wa fa-users-cog"></i>
                 <span>Users</span></a>
         </li>
+    @endif
 
+    @if (auth()->user()->can('readLog'))
         <!-- Nav Item - Tables -->
         <li class="nav-item {{ strpos(Request::path(), 'activity-log') !== false ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('log.index') }}">

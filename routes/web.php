@@ -27,21 +27,51 @@ Auth::routes([
     
 ]);
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('change-password', [UserController::class, 'update'])->name('user.update');
-
-Route::get("transaction", [TransactionController::class, 'index'])->name('transaction.index');
-Route::post("transaction/create", [TransactionController::class, 'store'])->name('transaction.store');
-Route::get("transaction/{transaction:id}/delete", [TransactionController::class, 'destroy'])->name('transaction.destroy');
-Route::get("transaction/search/{first}/{last}", [TransactionController::class, 'search'])->name('transaction.search');
-Route::get("financial-report", [FinancialReportController::class, 'index'])->name('financialReport.index');
-Route::get("financial-report/{month}/{year}", [FinancialReportController::class, 'detail'])->name('financialReport.detail');
-Route::get("pdf/{month}/{year}", [FinancialReportController::class, 'generatePdf'])->name('financialReport.generatePdf');
-
-Route::middleware('position:Owner')->group(function () {
-    Route::get("users", [UserController::class, 'index'])->name('user.index');
-    Route::post("users/create", [UserController::class, 'store'])->name('user.store');
-    Route::get("users/{user:id}/delete", [UserController::class, 'destroy'])->name('user.destroy');
-
-    Route::get("activity-log", [ActivityLogController::class, 'index'])->name('log.index');
+Route::middleware('permission:dashboard')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
+Route::post('change-password', [UserController::class, 'update'])->name('user.update');
+Route::get('help', [HomeController::class, 'help'])->name('help');
+
+/* transaction modul */
+    Route::middleware('permission:readTransaction')->group(function () {
+        Route::get("transaction", [TransactionController::class, 'index'])->name('transaction.index');
+        Route::get("transaction/search/{first}/{last}", [TransactionController::class, 'search'])->name('transaction.search');
+    });
+    Route::middleware('permission:createTransaction')->group(function () {
+        Route::post("transaction/create", [TransactionController::class, 'store'])->name('transaction.store');
+    });
+    Route::middleware('permission:deleteTransaction')->group(function () {
+        Route::get("transaction/{transaction:id}/delete", [TransactionController::class, 'destroy'])->name('transaction.destroy');
+    });
+/* end transacton modul */
+
+/* report modul */
+    Route::middleware('permission:readReport')->group(function () {
+        Route::get("financial-report", [FinancialReportController::class, 'index'])->name('financialReport.index');
+        Route::get("financial-report/{month}/{year}", [FinancialReportController::class, 'detail'])->name('financialReport.detail');
+        Route::get("pdf/{month}/{year}", [FinancialReportController::class, 'generatePdf'])->name('financialReport.generatePdf');
+    });
+/* end report modul */
+
+/* user modul */
+    Route::middleware('permission:readUser')->group(function () {
+        Route::get("users", [UserController::class, 'index'])->name('user.index');
+    });
+    Route::middleware('permission:createUser')->group(function () {
+        Route::post("users/role", [UserController::class, 'role'])->name('user.role');
+        Route::post("users/create", [UserController::class, 'store'])->name('user.store');
+    });
+    Route::middleware('permission:deleteUser')->group(function () {
+        Route::get("users/{user:id}/delete", [UserController::class, 'destroy'])->name('user.destroy');
+    });
+    Route::middleware('permission:editRoleUser')->group(function () {
+        Route::post("users/{user:id}/edit-role", [UserController::class, 'editRole'])->name('user.editRole');
+    });
+/* end user modul */
+
+/* log modul */
+    Route::middleware('permission:readLog')->group(function () {
+        Route::get("activity-log", [ActivityLogController::class, 'index'])->name('log.index');
+    });
+/* end log modul */
